@@ -16,7 +16,7 @@ class CoinDetector {
    public:
     CoinDetector(std::string coin_img_path);
     void SplitIntoChannels();
-    void performThresholding(Mat &img);
+    void PerformThresholding(Mat &img);
 };
 }  // namespace coindetector
 

@@ -23,6 +23,8 @@ void CoinDetector::SplitIntoChannels() {
     img_g = coin_channels[1];
     img_r = coin_channels[2];
 }
+
+void PerformThresholding(Mat &img) {}
 }  // namespace coindetector
 
 int main() {
