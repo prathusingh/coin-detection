@@ -15,6 +15,7 @@ class CoinDetector {
 
    public:
     CoinDetector(std::string coin_img_path);
+    void SplitIntoChannels();
 };
 }  // namespace coindetector
 
