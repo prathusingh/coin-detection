@@ -62,6 +62,20 @@ void CoinDetector::DetectCoinsUsingBlobDetector(Mat& img) {
     std::vector<KeyPoint> key_points;
     detector->detect(img, key_points);
     std::cout << key_points.size() << std::endl;
+
+    int x, y, radius;
+
+    for (auto i = 0; i < key_points.size(); i++) {
+        KeyPoint point = key_points[i];
+        x = point.pt.x;
+        y = point.pt.y;
+        radius = (int)point.size / 2.0;
+        circle(img, Point(x, y), 5, Scalar(0, 255, 0), -1);
+        circle(img, Point(x, y), radius, Scalar(0, 255, 0), 2);
+    }
+
+    imshow("blobs", img);
+    waitKey(0);
 }
 }  // namespace coindetector
 
