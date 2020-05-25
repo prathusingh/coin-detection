@@ -33,9 +33,35 @@ void CoinDetector::PerformOpening(Mat& img, Mat& morphologicaled_img) {
         getStructuringElement(MORPH_ELLIPSE, Size(2 * closing_size + 1, 2 * closing_size + 1),
                               Point(closing_size, closing_size));
     morphologyEx(img, morphologicaled_img, MORPH_CLOSE, element);
+}
 
-    imshow("morph", morphologicaled_img);
-    waitKey(0);
+void CoinDetector::DetectCoinsUsingBlobDetector(Mat& img) {
+    // Setup SimpleBlobDetector parameters.
+    SimpleBlobDetector::Params params;
+
+    params.blobColor = 0;
+
+    params.minDistBetweenBlobs = 2;
+
+    // Filter by Area
+    params.filterByArea = false;
+
+    // Filter by Circularity
+    params.filterByCircularity = true;
+    params.minCircularity = 0.8;
+
+    // Filter by Convexity
+    params.filterByConvexity = true;
+    params.minConvexity = 0.8;
+
+    // Filter by Inertia
+    params.filterByInertia = true;
+    params.minInertiaRatio = 0.8;
+    SimpleBlobDetector blob_detector;
+    Ptr<SimpleBlobDetector> detector = SimpleBlobDetector::create();
+    std::vector<KeyPoint> key_points;
+    detector->detect(img, key_points);
+    std::cout << key_points.size() << std::endl;
 }
 }  // namespace coindetector
 
@@ -48,4 +74,5 @@ int main() {
     coin_detector.PerformThresholding(coin_channels[1], thresholded_image);
     Mat morphed_img;
     coin_detector.PerformOpening(thresholded_image, morphed_img);
+    coin_detector.DetectCoinsUsingBlobDetector(morphed_img);
 }
