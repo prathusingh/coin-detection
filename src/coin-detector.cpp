@@ -26,6 +26,17 @@ void CoinDetector::SplitIntoChannels(Mat* channels) {
 void CoinDetector::PerformThresholding(Mat& img, Mat& thresholded_img) {
     threshold(img, thresholded_img, 40, 90, 1);
 }
+
+void CoinDetector::PerformOpening(Mat& img, Mat& morphologicaled_img) {
+    int closing_size = 10;
+    Mat element =
+        getStructuringElement(MORPH_ELLIPSE, Size(2 * closing_size + 1, 2 * closing_size + 1),
+                              Point(closing_size, closing_size));
+    morphologyEx(img, morphologicaled_img, MORPH_CLOSE, element);
+
+    imshow("morph", morphologicaled_img);
+    waitKey(0);
+}
 }  // namespace coindetector
 
 int main() {
@@ -35,4 +46,6 @@ int main() {
     coin_detector.SplitIntoChannels(coin_channels);
     Mat thresholded_image;
     coin_detector.PerformThresholding(coin_channels[1], thresholded_image);
+    Mat morphed_img;
+    coin_detector.PerformOpening(thresholded_image, morphed_img);
 }
