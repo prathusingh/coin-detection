@@ -28,7 +28,7 @@ void CoinDetector::PerformThresholding(Mat& img, Mat& thresholded_img) {
 }
 
 void CoinDetector::PerformOpening(Mat& img, Mat& morphologicaled_img) {
-    int closing_size = 10;
+    int closing_size = 4;
     Mat element =
         getStructuringElement(MORPH_ELLIPSE, Size(2 * closing_size + 1, 2 * closing_size + 1),
                               Point(closing_size, closing_size));
