@@ -19,6 +19,7 @@ class CoinDetector {
     void PerformThresholding(Mat& img, Mat& thresholded_img);
     static void PerformOpening(Mat& img, Mat& morphologicaled_img);
     void DetectCoinsUsingBlobDetector(Mat& img);
+    Mat DisplayConnectedComponents(Mat& img);
 };
 }  // namespace coindetector
 

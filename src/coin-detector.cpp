@@ -74,6 +74,21 @@ void CoinDetector::DetectCoinsUsingBlobDetector(Mat& img) {
         circle(coin, Point(x, y), radius, Scalar(0, 255, 0), 2);
     }
 }
+
+Mat DisplayConnectedComponents(Mat& img) {
+    Mat im_labels = img.clone();
+
+    Point min_loc, max_loc;
+    double min, max;
+
+    minMaxLoc(im_labels, &min, &max, &min_loc, &max_loc);
+    im_labels = 255 * (im_labels - min) / (max - min);
+    im_labels.convertTo(im_labels, CV_8U);
+
+    Mat im_color_map;
+    applyColorMap(im_labels, im_color_map, COLORMAP_JET);
+    return im_color_map;
+}
 }  // namespace coindetector
 
 int main() {
@@ -86,4 +101,5 @@ int main() {
     Mat morphed_img;
     coin_detector.PerformOpening(thresholded_image, morphed_img);
     coin_detector.DetectCoinsUsingBlobDetector(morphed_img);
+    coin_detector.DisplayConnectedComponents(morphed_img);
 }
